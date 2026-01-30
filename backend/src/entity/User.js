@@ -41,6 +41,10 @@ module.exports = new EntitySchema({
             type: "boolean",
             default: false
         },
+        avatar_url: {
+            type: "varchar",
+            nullable: true
+        },
         created_at: {
             type: "timestamp",
             createDate: true

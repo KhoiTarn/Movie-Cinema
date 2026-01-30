@@ -11,6 +11,7 @@ app.use((req, res, next) => {
     next();
 });
 app.use(express.json());
+app.use('/upload', express.static('upload'));
 
 app.get('/', (req, res) => {
     res.send("Welcome to Movie Cinema API. Access /api/movies to see data.");

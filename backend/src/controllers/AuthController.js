@@ -155,6 +155,57 @@ class AuthController {
             res.status(500).json({ message: "Server error" });
         }
     }
+    // Verify Email with OTP
+    static async verifyEmail(req, res) {
+        try {
+            const { email, otp } = req.body;
+            const user = await userRepository.findOne({ where: { email } });
+
+            if (!user) return res.status(404).json({ message: "User not found" });
+
+            if (user.is_verified) return res.status(400).json({ message: "Account already verified" });
+
+            if (user.otp_code !== otp || new Date() > new Date(user.otp_expires_at)) {
+                return res.status(400).json({ message: "Invalid or expired OTP" });
+            }
+
+            user.is_verified = true;
+            user.otp_code = null;
+            user.otp_expires_at = null;
+            await userRepository.save(user);
+
+            res.json({ message: "Email verified successfully" });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: "Server error" });
+        }
+    }
+
+    // Resend Verification OTP
+    static async resendVerify(req, res) {
+        try {
+            const { email } = req.body;
+            const user = await userRepository.findOne({ where: { email } });
+
+            if (!user) return res.status(404).json({ message: "User not found" });
+            if (user.is_verified) return res.status(400).json({ message: "Account already verified" });
+
+            // Generate 6 digit OTP
+            const otp = Math.floor(100000 + Math.random() * 900000).toString();
+            const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 mins
+
+            user.otp_code = otp;
+            user.otp_expires_at = expiresAt;
+            await userRepository.save(user);
+
+            await sendEmail(email, "Verify Your Account", `Your OTP code is: ${otp}`);
+            res.json({ message: "OTP sent to email" });
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: "Error sending OTP" });
+        }
+    }
 }
 
 module.exports = AuthController;
