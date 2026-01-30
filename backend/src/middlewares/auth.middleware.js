@@ -1,7 +1,5 @@
 const jwt = require("jsonwebtoken");
 
-const jwt = require("jsonwebtoken");
-
 const SECRET_KEY = process.env.SECRET_KEY || "fallback_secret_key";
 
 const authMiddleware = (req, res, next) => {

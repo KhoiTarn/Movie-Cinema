@@ -11,6 +11,11 @@ app.use((req, res, next) => {
     next();
 });
 app.use(express.json());
+
+app.get('/', (req, res) => {
+    res.send("Welcome to Movie Cinema API. Access /api/movies to see data.");
+});
+
 app.use("/api", routes);
 
 AppDataSource.initialize()
