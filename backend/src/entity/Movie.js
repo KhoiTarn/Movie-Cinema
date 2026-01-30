@@ -10,7 +10,8 @@ module.exports = new EntitySchema({
             generated: true
         },
         title: {
-            type: "varchar"
+            type: "varchar",
+            nullable: true
         },
         description: {
             type: "text",

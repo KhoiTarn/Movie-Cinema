@@ -10,10 +10,12 @@ module.exports = new EntitySchema({
             generated: true
         },
         name: {
-            type: "varchar"
+            type: "varchar",
+            nullable: true
         },
         seat_count: {
-            type: "int"
+            type: "int",
+            nullable: true
         }
     },
     relations: {

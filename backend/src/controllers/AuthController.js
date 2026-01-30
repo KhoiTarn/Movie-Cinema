@@ -67,6 +67,10 @@ class AuthController {
     static async googleLogin(req, res) {
         try {
             const { credential } = req.body; // Google ID Token
+            console.log("Received Google Login Request");
+            console.log("Backend Configured Client ID:", process.env.GOOGLE_CLIENT_ID);
+            console.log("Received Token (first 20 chars):", credential ? credential.substring(0, 20) : "No credential");
+
             const ticket = await client.verifyIdToken({
                 idToken: credential,
                 audience: process.env.GOOGLE_CLIENT_ID, // Ensure backend .env has the same Client ID
@@ -95,8 +99,10 @@ class AuthController {
             res.json({ token, user: { user_id: user.user_id, full_name: user.full_name, email: user.email } });
 
         } catch (error) {
-            console.error("Google verify error:", error);
-            res.status(400).json({ message: "Invalid Google Token" });
+            console.error("Google verify error DETAILS:", error.message);
+            // Also log full error for context if needed
+            console.error(error);
+            res.status(400).json({ message: "Invalid Google Token: " + error.message });
         }
     }
 

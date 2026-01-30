@@ -8,7 +8,7 @@ const AppDataSource = new DataSource({
     username: process.env.DB_USERNAME || "postgres",
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME || "datvexemphim",
-    synchronize: false, // Turned off to avoid schema sync errors with existing data
+    synchronize: true, // Turned on to update schema (add missing columns like role, google_id)
     logging: false,
     entities: [
         "src/entity/**/*.js"

@@ -10,16 +10,20 @@ module.exports = new EntitySchema({
             generated: true
         },
         seat_code: {
-            type: "varchar"
+            type: "varchar",
+            nullable: true
         },
         seat_type: {
-            type: "varchar" // NORMAL, VIP
+            type: "varchar", // NORMAL, VIP
+            nullable: true
         },
         row_index: {
-            type: "int"
+            type: "int",
+            nullable: true
         },
         column_index: {
-            type: "int"
+            type: "int",
+            nullable: true
         },
         price_multiplier: {
             type: "float", // or decimal
