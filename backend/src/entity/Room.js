@@ -1,10 +1,10 @@
 const EntitySchema = require("typeorm").EntitySchema;
 
 module.exports = new EntitySchema({
-    name: "Screen",
-    tableName: "screens",
+    name: "Room",
+    tableName: "rooms",
     columns: {
-        screen_id: {
+        room_id: {
             primary: true,
             type: "int",
             generated: true

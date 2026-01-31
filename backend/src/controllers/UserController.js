@@ -40,7 +40,7 @@ class UserController {
                 relations: {
                     showtime: {
                         movie: true,
-                        screen: {
+                        room: {
                             cinema: true
                         }
                     }
@@ -68,7 +68,8 @@ class UserController {
                     seats: seats,
                     // Flatten structure for easier frontend consumption if needed, or keep as is
                     movie_title: booking.showtime.movie.title,
-                    cinema_name: booking.showtime.screen.cinema.name,
+                    cinema_name: booking.showtime.room.cinema.name,
+                    room_name: booking.showtime.room.name,
                     show_date: booking.showtime.show_date,
                     start_time: booking.showtime.start_time
                 });

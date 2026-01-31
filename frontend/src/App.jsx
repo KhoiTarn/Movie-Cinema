@@ -7,6 +7,10 @@ import MovieDetail from './pages/MovieDetail';
 import Booking from './pages/Booking';
 import Profile from './pages/Profile';
 import ForgotPassword from './pages/ForgotPassword';
+import AdminDashboard from './pages/AdminDashboard';
+import ManageMovies from './pages/ManageMovies';
+import ManageShowtimes from './pages/ManageShowtimes';
+import AdminRoute from './components/AdminRoute';
 
 function App() {
   return (
@@ -20,6 +24,13 @@ function App() {
         <Route path="/movie/:id" element={<MovieDetail />} />
         <Route path="/booking/:showtimeId" element={<Booking />} />
         <Route path="/profile" element={<Profile />} />
+
+        {/* Admin Routes */}
+        <Route element={<AdminRoute />}>
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/movies" element={<ManageMovies />} />
+          <Route path="/admin/showtimes" element={<ManageShowtimes />} />
+        </Route>
       </Routes>
     </Router>
   );

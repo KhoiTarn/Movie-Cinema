@@ -17,14 +17,32 @@ module.exports = new EntitySchema({
             type: "text",
             nullable: true
         },
+        director: {
+            type: "varchar",
+            nullable: true
+        },
+        cast: {
+            type: "text",
+            nullable: true
+        },
         duration_minutes: {
-            type: "int"
+            type: "int",
+            nullable: true
+        },
+        release_date: {
+            type: "date",
+            nullable: true
         },
         age_rating: {
             type: "varchar",
-            length: 10
+            length: 10,
+            nullable: true
         },
         poster_url: {
+            type: "varchar",
+            nullable: true
+        },
+        trailer_url: {
             type: "varchar",
             nullable: true
         },
@@ -41,6 +59,15 @@ module.exports = new EntitySchema({
         created_at: {
             type: "timestamp",
             createDate: true
+        }
+    },
+    relations: {
+        genres: {
+            target: "Genre",
+            type: "many-to-one",
+            joinColumn: { name: "genre_id" },
+            cascade: true,
+            nullable: true
         }
     }
 });

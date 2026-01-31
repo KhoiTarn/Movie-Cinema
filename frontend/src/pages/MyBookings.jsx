@@ -19,7 +19,7 @@ const MyBookings = () => {
                         <div>
                             <h3 style={{ fontSize: '1.2rem', marginBottom: '5px' }}>{booking.showtime.movie.title}</h3>
                             <p style={{ color: '#aaa', marginBottom: '5px' }}>
-                                {booking.showtime.screen.cinema.name} - {booking.showtime.screen.name}
+                                {booking.showtime.room.cinema.name} - {booking.showtime.room.name}
                             </p>
                             <p style={{ color: 'var(--primary-color)' }}>
                                 {new Date(booking.showtime.start_time).toLocaleString()}

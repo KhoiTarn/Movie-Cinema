@@ -27,10 +27,10 @@ module.exports = new EntitySchema({
             type: "many-to-one",
             joinColumn: { name: "movie_id" }
         },
-        screen: {
-            target: "Screen",
+        room: {
+            target: "Room",
             type: "many-to-one",
-            joinColumn: { name: "screen_id" }
+            joinColumn: { name: "room_id" }
         }
     }
 });

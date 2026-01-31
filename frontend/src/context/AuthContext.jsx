@@ -7,13 +7,25 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const storedUser = localStorage.getItem('user');
+    const fetchUser = async () => {
         const token = localStorage.getItem('token');
-        if (storedUser && token) {
-            setUser(JSON.parse(storedUser));
+        if (token) {
+            try {
+                const res = await api.get('/users/profile');
+                console.log("Fetched User for Context:", res.data);
+                setUser(res.data);
+                localStorage.setItem('user', JSON.stringify(res.data));
+            } catch (error) {
+                console.error("Failed to fetch user profile", error);
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+            }
         }
         setLoading(false);
+    };
+
+    useEffect(() => {
+        fetchUser();
     }, []);
 
     const login = async (email, password) => {
@@ -62,7 +74,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, googleLogin, logout, register, loading }}>
+        <AuthContext.Provider value={{ user, login, googleLogin, logout, register, loading, refreshUser: fetchUser }}>
             {children}
         </AuthContext.Provider>
     );

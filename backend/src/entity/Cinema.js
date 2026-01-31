@@ -17,5 +17,13 @@ module.exports = new EntitySchema({
             type: "text",
             nullable: true
         }
+    },
+    relations: {
+        rooms: {
+            target: "Room",
+            type: "one-to-many",
+            inverseSide: "cinema",
+            cascade: true
+        }
     }
 });

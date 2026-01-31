@@ -9,14 +9,6 @@ module.exports = new EntitySchema({
             type: "int",
             generated: true
         },
-        seat_code: {
-            type: "varchar",
-            nullable: true
-        },
-        seat_type: {
-            type: "varchar", // NORMAL, VIP
-            nullable: true
-        },
         row_index: {
             type: "int",
             nullable: true
@@ -25,20 +17,25 @@ module.exports = new EntitySchema({
             type: "int",
             nullable: true
         },
-        price_multiplier: {
-            type: "float", // or decimal
-            default: 1
+        seat_code: {
+            type: "varchar",
+            nullable: true
         },
-        is_active: {
-            type: "boolean",
-            default: true
+        seat_type: {
+            type: "varchar", // STANDARD, VIP
+            default: "STANDARD",
+            nullable: true
+        },
+        price_multiplier: {
+            type: "decimal",
+            default: 1.0
         }
     },
     relations: {
-        screen: {
-            target: "Screen",
+        room: {
+            target: "Room",
             type: "many-to-one",
-            joinColumn: { name: "screen_id" }
+            joinColumn: { name: "room_id" }
         }
     }
 });

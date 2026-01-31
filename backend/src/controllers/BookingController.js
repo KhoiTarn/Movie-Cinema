@@ -21,9 +21,12 @@ class BookingController {
                 return res.status(400).json({ message: "No seats selected" });
             }
 
-            // 1. Get Showtime info
+            // 1. Get Showtime & User info
             const showtime = await showtimeRepository.findOne({ where: { showtime_id } });
             if (!showtime) throw new Error("Showtime not found");
+
+            const user = await AppDataSource.getRepository("User").findOne({ where: { user_id: userId } });
+            if (!user) throw new Error("User not found");
 
             // 2. Calculate Total Amount & Validate Seats
             let totalAmount = 0;
@@ -38,7 +41,7 @@ class BookingController {
                     where: {
                         showtime: { showtime_id },
                         seat: { seat_id: seatId },
-                        status: "CONFIRMED" // Simplified check
+                        status: "CONFIRMED"
                     }
                 });
 
@@ -52,13 +55,23 @@ class BookingController {
                 seatsToBook.push({ seat, price: seatPrice });
             }
 
+            // Apply Discount for Verified Users
+            let discountAmount = 0;
+            let finalAmount = totalAmount;
+
+            if (user.is_verified) {
+                discountAmount = totalAmount * 0.10; // 10% discount
+                finalAmount = totalAmount - discountAmount;
+            }
+
             // 3. Create Booking Record
             const booking = bookingRepository.create({
                 user: { user_id: userId },
                 showtime: { showtime_id },
                 total_amount: totalAmount,
-                final_amount: totalAmount, // Discount logic can be added later
-                status: "CONFIRMED", // Auto confirm for now
+                discount_amount: discountAmount,
+                final_amount: finalAmount,
+                status: "CONFIRMED",
             });
 
             const savedBooking = await queryRunner.manager.getRepository("Booking").save(booking);
@@ -97,7 +110,7 @@ class BookingController {
             const userId = req.user.user_id;
             const bookings = await bookingRepository.find({
                 where: { user: { user_id: userId } },
-                relations: ["showtime", "showtime.movie", "showtime.screen.cinema"],
+                relations: ["showtime", "showtime.movie", "showtime.room.cinema"],
                 order: { created_at: "DESC" }
             });
             res.json(bookings);

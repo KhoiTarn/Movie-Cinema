@@ -4,7 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
-    const { user, logout } = useContext(AuthContext);
+    const { user, logout, loading } = useContext(AuthContext);
     const [profile, setProfile] = useState(null);
     const [bookings, setBookings] = useState([]);
     const [activeTab, setActiveTab] = useState('info'); // info | history
@@ -20,13 +20,15 @@ const Profile = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (loading) return; // Wait for auth check
+
         if (!user) {
             navigate('/login');
             return;
         }
         fetchProfile();
         fetchBookings();
-    }, [user, navigate]);
+    }, [user, loading, navigate]);
 
     useEffect(() => {
         if (profile) {
@@ -120,7 +122,7 @@ const Profile = () => {
         }
     };
 
-    if (!profile) return <div className="container" style={{ padding: '50px', textAlign: 'center' }}>Loading...</div>;
+    if (loading || !profile) return <div className="container" style={{ padding: '50px', textAlign: 'center' }}>Loading...</div>;
 
     return (
         <div className="container" style={{ padding: '0px 0 50px', maxWidth: '900px', margin: '0 auto' }}>

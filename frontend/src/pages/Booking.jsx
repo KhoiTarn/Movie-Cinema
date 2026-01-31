@@ -74,62 +74,123 @@ const Booking = () => {
     }, 0);
 
     return (
-        <div className="container" style={{ padding: '40px 20px' }}>
-            {showtime && (
-                <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-                    <h2>{showtime.movie.title} - {showtime.screen.name}</h2>
-                    <p>{new Date(showtime.start_time).toLocaleString()}</p>
-                </div>
-            )}
+        <div className="container" style={{ padding: '40px 0', display: 'flex', gap: '30px', alignItems: 'flex-start' }}>
 
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <div style={{ maxWidth: '600px', width: '100%' }}>
-                    <div style={{ height: '10px', backgroundColor: '#555', borderRadius: '50%', marginBottom: '40px', boxShadow: '0 10px 20px rgba(255,255,255,0.1)' }}></div> {/* Screen */}
-                    <p style={{ textAlign: 'center', marginBottom: '20px', color: '#666' }}>MÀN HÌNH</p>
+            {/* L E F T   S I D E   ( 7 0 % )   -   S E A T   S E L E C T I O N */}
+            <div style={{ flex: 7, backgroundColor: '#111', padding: '30px', borderRadius: '12px', border: '1px solid #222' }}>
+                <div style={{ height: '8px', backgroundColor: '#555', borderRadius: '50%', marginBottom: '40px', boxShadow: '0 10px 30px rgba(255,255,255,0.1)' }}></div>
+                <p style={{ textAlign: 'center', marginBottom: '30px', color: '#444', letterSpacing: '2px', fontSize: '0.8rem' }}>MÀN HÌNH</p>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center' }}>
-                        {Object.keys(rows).sort((a, b) => a - b).map(rowIndex => (
-                            <div key={rowIndex} style={{ display: 'flex', gap: '10px' }}>
-                                {rows[rowIndex].sort((a, b) => a.column_index - b.column_index).map(seat => {
-                                    const isBooked = seat.status === 'BOOKED';
-                                    const isSelected = selectedSeats.includes(seat.seat_id);
-                                    let bgColor = '#444'; // Available
-                                    if (isBooked) bgColor = '#222'; // Sold
-                                    if (isSelected) bgColor = 'var(--primary-color)'; // Selected
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center' }}>
+                    {Object.keys(rows).sort((a, b) => a - b).map(rowIndex => (
+                        <div key={rowIndex} style={{ display: 'flex', gap: '10px' }}>
+                            {rows[rowIndex].sort((a, b) => a.column_index - b.column_index).map(seat => {
+                                const isBooked = seat.status === 'BOOKED';
+                                const isSelected = selectedSeats.includes(seat.seat_id);
+                                let bgColor = '#333'; // Available
+                                if (isBooked) bgColor = '#222'; // Sold
+                                if (isSelected) bgColor = 'var(--primary-color)'; // Selected
 
-                                    return (
-                                        <button
-                                            key={seat.seat_id}
-                                            disabled={isBooked}
-                                            onClick={() => toggleSeat(seat.seat_id)}
-                                            title={`${seat.seat_code} - ${seat.seat_type}`}
-                                            style={{
-                                                width: '35px',
-                                                height: '35px',
-                                                backgroundColor: bgColor,
-                                                color: 'white',
-                                                borderRadius: '4px',
-                                                fontSize: '0.8rem',
-                                                cursor: isBooked ? 'not-allowed' : 'pointer',
-                                                opacity: isBooked ? 0.3 : 1
-                                            }}
-                                        >
-                                            {seat.seat_code}
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        ))}
-                    </div>
-
-                    <div style={{ marginTop: '40px', borderTop: '1px solid #333', paddingTop: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <div>
-                            <div style={{ marginBottom: '5px' }}>Đang chọn: {selectedSeats.length} ghế</div>
-                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Tổng tiền: {totalPrice.toLocaleString()}đ</div>
+                                return (
+                                    <button
+                                        key={seat.seat_id}
+                                        disabled={isBooked}
+                                        onClick={() => toggleSeat(seat.seat_id)}
+                                        title={`${seat.seat_code} - ${seat.seat_type}`}
+                                        style={{
+                                            width: '40px',
+                                            height: '40px',
+                                            backgroundColor: bgColor,
+                                            color: isBooked ? '#555' : 'white',
+                                            borderRadius: '6px',
+                                            fontSize: '0.9rem',
+                                            fontWeight: 'bold',
+                                            cursor: isBooked ? 'not-allowed' : 'pointer',
+                                            opacity: isBooked ? 0.5 : 1,
+                                            border: isSelected ? '2px solid #fff' : 'none',
+                                            transition: 'all 0.2s'
+                                        }}
+                                    >
+                                        {seat.seat_code}
+                                    </button>
+                                );
+                            })}
                         </div>
-                        <button onClick={handleBooking} className="btn-primary" style={{ padding: '15px 40px', fontSize: '1.1rem' }}>XÁC NHẬN</button>
+                    ))}
+                </div>
+
+                <div style={{ marginTop: '40px', display: 'flex', justifyContent: 'center', gap: '20px', color: '#aaa', fontSize: '0.9rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: '16px', height: '16px', backgroundColor: '#333', borderRadius: '4px' }}></div> Ghế trống</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: '16px', height: '16px', backgroundColor: 'var(--primary-color)', borderRadius: '4px' }}></div> Đang chọn</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: '16px', height: '16px', backgroundColor: '#222', borderRadius: '4px' }}></div> Đã bán</div>
+                </div>
+            </div>
+
+            {/* R I G H T   S I D E   ( 3 0 % )   -   B O O K I N G   I N F O */}
+            <div style={{ flex: 3, backgroundColor: '#1a1a1a', padding: '25px', borderRadius: '12px', border: '1px solid #333', position: 'sticky', top: '100px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+
+                {showtime && (
+                    <div style={{ borderBottom: '1px solid #333', paddingBottom: '15px' }}>
+                        <h3 style={{ margin: '0 0 10px', color: 'var(--primary-color)' }}>{showtime.movie.title}</h3>
+                        <p style={{ margin: '5px 0', fontSize: '0.9rem', color: '#fff' }}><strong>Rạp:</strong> {showtime.room.name}</p>
+                        <p style={{ margin: '5px 0', fontSize: '0.9rem', color: '#aaa' }}>Running time: {new Date(showtime.start_time).toLocaleString()}</p>
+                    </div>
+                )}
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#111', padding: '15px', borderRadius: '8px' }}>
+                    <span style={{ color: '#aaa' }}>Ghế đang chọn:</span>
+                    <span style={{ fontWeight: 'bold', fontSize: '1.2rem', color: '#fff' }}>{selectedSeats.length}</span>
+                </div>
+
+                {/* Discount Banner */}
+                {user && user.is_verified ? (
+                    <div style={{ backgroundColor: 'rgba(76, 175, 80, 0.1)', color: '#4caf50', padding: '12px', borderRadius: '8px', border: '1px solid #4caf50', fontSize: '0.9rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                            <span>✓</span> <strong>Verified Member</strong>
+                        </div>
+                        Đã áp dụng giảm giá 10%
+                    </div>
+                ) : (
+                    <div style={{ backgroundColor: 'rgba(255, 152, 0, 0.1)', color: '#ff9800', padding: '12px', borderRadius: '8px', border: '1px solid #ff9800', fontSize: '0.9rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                            <span>!</span> <strong>Chưa xác thực</strong>
+                        </div>
+                        <span style={{ cursor: 'pointer', textDecoration: 'underline' }} onClick={() => navigate('/profile')}>Xác thực Email ngay</span> để được giảm 10%.
+                    </div>
+                )}
+
+                {/* Payment Summary */}
+                <div style={{ borderTop: '1px solid #333', paddingTop: '15px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', color: '#888' }}>
+                        <span>Tạm tính</span>
+                        <span>{totalPrice.toLocaleString()}đ</span>
+                    </div>
+
+                    {user && user.is_verified && (
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', color: '#4caf50' }}>
+                            <span>Giảm giá</span>
+                            <span>-{(totalPrice * 0.1).toLocaleString()}đ</span>
+                        </div>
+                    )}
+
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '15px', alignItems: 'flex-end' }}>
+                        <span style={{ fontWeight: 'bold' }}>TỔNG TIỀN</span>
+                        <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--primary-color)' }}>
+                            {user && user.is_verified
+                                ? (totalPrice * 0.9).toLocaleString()
+                                : totalPrice.toLocaleString()
+                            }đ
+                        </span>
                     </div>
                 </div>
+
+                <button
+                    onClick={handleBooking}
+                    className="btn-primary"
+                    style={{ width: '100%', padding: '15px', fontSize: '1.1rem', fontWeight: 'bold', marginTop: '10px', borderRadius: '8px' }}
+                >
+                    ĐẶT VÉ NGAY
+                </button>
             </div>
         </div>
     );

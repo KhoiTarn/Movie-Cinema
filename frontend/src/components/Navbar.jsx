@@ -4,6 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 
 const Navbar = () => {
     const { user, logout } = useContext(AuthContext);
+    console.log("Navbar User Context:", user); // DEBUG: Check user role
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -75,11 +76,14 @@ const Navbar = () => {
                                         <p style={{ margin: 0, fontSize: '0.8rem', color: '#aaa' }}>{user.email}</p>
                                     </div>
 
+                                    {user.role && user.role.toLowerCase() === 'admin' && (
+                                        <Link to="/admin" style={{ display: 'block', padding: '10px 20px', color: '#ff9800', fontWeight: 'bold', textDecoration: 'none', transition: 'background 0.2s' }} onMouseEnter={(e) => e.target.style.background = '#333'} onMouseLeave={(e) => e.target.style.background = 'transparent'}>
+                                            ⚙️ Quản lý hệ thống
+                                        </Link>
+                                    )}
+
                                     <Link to="/profile" style={{ display: 'block', padding: '10px 20px', color: '#ccc', textDecoration: 'none', transition: 'background 0.2s' }} onMouseEnter={(e) => e.target.style.background = '#333'} onMouseLeave={(e) => e.target.style.background = 'transparent'}>
-                                        🎫 Vé của tôi
-                                    </Link>
-                                    <Link to="/profile" style={{ display: 'block', padding: '10px 20px', color: '#ccc', textDecoration: 'none', transition: 'background 0.2s' }} onMouseEnter={(e) => e.target.style.background = '#333'} onMouseLeave={(e) => e.target.style.background = 'transparent'}>
-                                        👤 Thông tin cá nhân
+                                        👤 Hồ sơ & Vé của tôi
                                     </Link>
                                     <div
                                         onClick={handleLogout}

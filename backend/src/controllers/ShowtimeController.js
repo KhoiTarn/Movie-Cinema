@@ -20,7 +20,7 @@ class ShowtimeController {
 
             const showtimes = await showtimeRepository.find({
                 where: where,
-                relations: ["movie", "screen", "screen.cinema"],
+                relations: ["movie", "room", "room.cinema"],
                 order: { start_time: "ASC" }
             });
 
@@ -37,7 +37,7 @@ class ShowtimeController {
             const id = parseInt(req.params.id);
             const showtime = await showtimeRepository.findOne({
                 where: { showtime_id: id },
-                relations: ["movie", "screen", "screen.cinema"]
+                relations: ["movie", "room", "room.cinema"]
             });
             if (!showtime) return res.status(404).json({ message: "Showtime not found" });
             res.json(showtime);
@@ -51,16 +51,16 @@ class ShowtimeController {
         try {
             const showtimeId = parseInt(req.params.id);
 
-            // 1. Get Showtime to know the Screen
+            // 1. Get Showtime to know the Room
             const showtime = await showtimeRepository.findOne({
                 where: { showtime_id: showtimeId },
-                relations: ["screen"]
+                relations: ["room"]
             });
             if (!showtime) return res.status(404).json({ message: "Showtime not found" });
 
-            // 2. Get all Seats for this Screen
+            // 2. Get all Seats for this Room
             const seats = await seatRepository.find({
-                where: { screen: { screen_id: showtime.screen.screen_id } },
+                where: { room: { room_id: showtime.room.room_id } },
                 order: { row_index: "ASC", column_index: "ASC" }
             });
 
@@ -90,6 +90,53 @@ class ShowtimeController {
         } catch (error) {
             console.error("Get Seats Error:", error);
             res.status(500).json({ message: "Internal server error" });
+        }
+    }
+    // POST /api/showtimes
+    static async create(req, res) {
+        try {
+            const { movie_id, room_id, start_time, base_price } = req.body;
+
+            const movie = await AppDataSource.getRepository("Movie").findOne({ where: { movie_id } });
+            if (!movie) return res.status(404).json({ message: "Movie not found" });
+
+            const room = await AppDataSource.getRepository("Room").findOne({ where: { room_id } });
+            if (!room) return res.status(404).json({ message: "Room not found" });
+
+            const startTimeDate = new Date(start_time);
+            const duration = movie.duration_minutes || 120; // Default 120 mins if null
+            const endTimeDate = new Date(startTimeDate.getTime() + duration * 60000);
+
+            const showtime = showtimeRepository.create({
+                movie,
+                room,
+                start_time: startTimeDate,
+                end_time: endTimeDate,
+                base_price
+            });
+
+            await showtimeRepository.save(showtime);
+            res.status(201).json({ message: "Showtime created successfully", showtime });
+
+        } catch (error) {
+            console.error("Create Showtime Error:", error);
+            res.status(500).json({ message: "Server error" });
+        }
+    }
+
+    // DELETE /api/showtimes/:id
+    static async delete(req, res) {
+        try {
+            const id = parseInt(req.params.id);
+            const showtime = await showtimeRepository.findOne({ where: { showtime_id: id } });
+
+            if (!showtime) return res.status(404).json({ message: "Showtime not found" });
+
+            await showtimeRepository.remove(showtime);
+            res.json({ message: "Showtime deleted successfully" });
+        } catch (error) {
+            console.error("Delete Showtime Error:", error);
+            res.status(500).json({ message: "Server error" });
         }
     }
 }

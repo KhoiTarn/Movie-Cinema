@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
+import { getYoutubeEmbedUrl } from '../utils/helpers';
 
 const MovieDetail = () => {
     const { id } = useParams();
@@ -24,6 +25,21 @@ const MovieDetail = () => {
                     <div style={{ height: '450px', backgroundColor: '#333' }}>
                         {movie.poster_url ? <img src={movie.poster_url} alt={movie.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : 'No Poster'}
                     </div>
+                    {/* Trailer Embed */}
+                    {movie.trailer_url && (
+                        <div style={{ marginTop: '20px' }}>
+                            <iframe
+                                width="100%"
+                                height="200"
+                                src={getYoutubeEmbedUrl(movie.trailer_url)}
+                                title="Trailer"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                style={{ borderRadius: '4px' }}
+                            ></iframe>
+                        </div>
+                    )}
                 </div>
                 <div>
                     <h1 style={{ fontSize: '2.5rem', marginBottom: '10px' }}>{movie.title}</h1>
