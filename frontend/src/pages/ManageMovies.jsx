@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { getYoutubeEmbedUrl } from '../utils/helpers';
 
 const ManageMovies = () => {
+    const navigate = useNavigate();
     const [movies, setMovies] = useState([]);
     const [genres, setGenres] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -138,7 +140,25 @@ const ManageMovies = () => {
                 `}
             </style>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                <h1 style={{ margin: 0 }}>Quản lý Phim</h1>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                    <button
+                        onClick={() => navigate('/admin')}
+                        style={{
+                            background: 'none',
+                            border: '1px solid #555',
+                            color: '#ccc',
+                            padding: '5px 10px',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '5px'
+                        }}
+                    >
+                        ⬅ Quay lại
+                    </button>
+                    <h1 style={{ margin: 0 }}>Quản lý Phim</h1>
+                </div>
                 <button onClick={handleAddNew} style={{ padding: '10px 20px', backgroundColor: 'var(--primary-color)', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer' }}>
                     + Thêm Phim
                 </button>
@@ -153,7 +173,7 @@ const ManageMovies = () => {
                             <th style={{ padding: '15px' }}>Tên Phim</th>
                             <th style={{ padding: '15px' }}>Thời lượng</th>
                             <th style={{ padding: '15px' }}>Độ tuổi</th>
-                            <th style={{ padding: '15px' }}>Trailer</th>
+                            {/* Removed Trailer Column */}
                             <th style={{ padding: '15px' }}>Ngày chiếu</th>
                             <th style={{ padding: '15px', textAlign: 'right' }}>Hành động</th>
                         </tr>
@@ -171,13 +191,6 @@ const ManageMovies = () => {
                                     <span style={{ padding: '3px 8px', borderRadius: '4px', backgroundColor: '#333', fontSize: '0.8rem' }}>
                                         {movie.age_rating}
                                     </span>
-                                </td>
-                                <td style={{ padding: '15px' }}>
-                                    {movie.trailer_url && (
-                                        <a href={movie.trailer_url} target="_blank" rel="noopener noreferrer" style={{ color: '#007bff' }}>
-                                            Xem Trailer
-                                        </a>
-                                    )}
                                 </td>
                                 <td style={{ padding: '15px' }}>{new Date(movie.release_date).toLocaleDateString()}</td>
                                 <td style={{ padding: '15px', textAlign: 'right' }}>

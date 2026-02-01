@@ -16,6 +16,11 @@ module.exports = new EntitySchema({
         seat_count: {
             type: "int",
             nullable: true
+        },
+        status: {
+            type: "varchar", // AVAILABLE, MAINTENANCE
+            default: "AVAILABLE",
+            nullable: true
         }
     },
     relations: {
@@ -23,6 +28,12 @@ module.exports = new EntitySchema({
             target: "Cinema",
             type: "many-to-one",
             joinColumn: { name: "cinema_id" }
+        },
+        seats: {
+            target: "Seat",
+            type: "one-to-many",
+            inverseSide: "room",
+            cascade: true // creating room should not necessarily create seats, but deleting room should delete seats
         }
     }
 });

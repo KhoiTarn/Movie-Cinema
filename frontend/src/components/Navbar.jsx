@@ -15,8 +15,8 @@ const Navbar = () => {
     return (
         <nav style={{ backgroundColor: 'rgba(0,0,0,0.9)', padding: '15px 0', borderBottom: '1px solid #333', position: 'sticky', top: 0, zIndex: 100 }}>
             <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Link to="/" style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'var(--primary-color)' }}>
-                    Khoi CINEMA
+                <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
+                    <img src="/images/logo.png" alt="Khoi Cinema" style={{ height: '50px', objectFit: 'contain' }} />
                 </Link>
                 <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
                     <Link to="/">Phim Đang Chiếu</Link>

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { getYoutubeEmbedUrl } from '../utils/helpers';
 
 const MovieDetail = () => {
     const { id } = useParams();
+    const navigate = useNavigate(); // Hook for navigation
     const [movie, setMovie] = useState(null);
     const [showtimes, setShowtimes] = useState([]);
 
@@ -20,6 +21,23 @@ const MovieDetail = () => {
 
     return (
         <div className="container" style={{ padding: '40px 20px' }}>
+            <button
+                onClick={() => navigate('/')}
+                style={{
+                    background: 'none',
+                    border: '1px solid #555',
+                    color: '#ccc',
+                    padding: '8px 15px',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '5px',
+                    marginBottom: '20px'
+                }}
+            >
+                ⬅ Trang chủ
+            </button>
             <div style={{ display: 'flex', gap: '40px', marginBottom: '40px' }}>
                 <div style={{ width: '300px', flexShrink: 0 }}>
                     <div style={{ height: '450px', backgroundColor: '#333' }}>

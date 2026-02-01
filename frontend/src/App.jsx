@@ -10,6 +10,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import AdminDashboard from './pages/AdminDashboard';
 import ManageMovies from './pages/ManageMovies';
 import ManageShowtimes from './pages/ManageShowtimes';
+import ManageRooms from './pages/ManageRooms';
 import AdminRoute from './components/AdminRoute';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/movies" element={<ManageMovies />} />
           <Route path="/admin/showtimes" element={<ManageShowtimes />} />
+          <Route path="/admin/rooms" element={<ManageRooms />} />
         </Route>
       </Routes>
     </Router>

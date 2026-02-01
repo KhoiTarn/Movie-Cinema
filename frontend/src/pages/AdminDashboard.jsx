@@ -51,6 +51,9 @@ const AdminDashboard = () => {
                     <Link to="/admin/showtimes" style={{ padding: '10px 20px', backgroundColor: '#333', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer', textDecoration: 'none' }}>
                         📅 Quản lý Lịch Chiếu
                     </Link>
+                    <Link to="/admin/rooms" style={{ padding: '10px 20px', backgroundColor: '#007bff', border: 'none', borderRadius: '4px', color: '#fff', cursor: 'pointer', textDecoration: 'none' }}>
+                        💺 Quản lý Phòng
+                    </Link>
                 </div>
             </div>
         </div>

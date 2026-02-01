@@ -30,30 +30,42 @@ export const Login = () => {
     };
 
     return (
-        <div className="container" style={{ maxWidth: '400px', marginTop: '50px' }}>
-            <h2 style={{ marginBottom: '20px', textAlign: 'center' }}>Đăng Nhập</h2>
-            {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
+        <div style={{
+            minHeight: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'radial-gradient(circle at 20% 40%, #500000, #000000 60%)',
+            color: '#fff'
+        }}>
+            <div className="container" style={{ maxWidth: '400px', width: '100%', padding: '40px', backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: '12px', border: '1px solid #333' }}>
+                <h2 style={{ marginBottom: '20px', textAlign: 'center' }}>Đăng Nhập</h2>
+                {error && <div style={{ color: 'red', marginBottom: '10px', textAlign: 'center' }}>{error}</div>}
 
-            <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
-                <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                <input type="password" placeholder="Mật khẩu" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                <button type="submit" className="btn-primary" style={{ width: '100%' }}>Đăng Nhập</button>
-            </form>
+                <form onSubmit={handleSubmit} style={{ marginBottom: '20px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                    <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required style={{ padding: '12px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#222', color: '#fff' }} />
+                    <input type="password" placeholder="Mật khẩu" value={password} onChange={(e) => setPassword(e.target.value)} required style={{ padding: '12px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#222', color: '#fff' }} />
+                    <button type="submit" className="btn-primary" style={{ width: '100%', padding: '12px', fontWeight: 'bold' }}>Đăng Nhập</button>
+                </form>
 
-            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                <Link to="/forgot-password" style={{ color: '#aaa', fontSize: '0.9rem' }}>Quên mật khẩu?</Link>
-            </div>
+                <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+                    <Link to="/forgot-password" style={{ color: '#aaa', fontSize: '0.9rem', textDecoration: 'none' }}>Quên mật khẩu?</Link>
+                </div>
 
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <GoogleLogin
-                    onSuccess={handleGoogleSuccess}
-                    onError={() => {
-                        console.log('Login Failed');
-                        setError("Google Login Failed");
-                    }}
-                    useOneTap
-                    theme="filled_black"
-                />
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <GoogleLogin
+                        onSuccess={handleGoogleSuccess}
+                        onError={() => {
+                            console.log('Login Failed');
+                            setError("Google Login Failed");
+                        }}
+                        useOneTap
+                        theme="filled_black"
+                    />
+                </div>
+                <div style={{ marginTop: '20px', textAlign: 'center', fontSize: '0.9rem', color: '#aaa' }}>
+                    Chưa có tài khoản? <Link to="/register" style={{ color: 'var(--primary-color)', textDecoration: 'none' }}>Đăng ký ngay</Link>
+                </div>
             </div>
         </div>
     );
@@ -79,15 +91,27 @@ export const Register = () => {
     };
 
     return (
-        <div className="container" style={{ maxWidth: '400px', marginTop: '50px' }}>
-            <h2 style={{ marginBottom: '20px', textAlign: 'center' }}>Đăng Ký Thành Viên</h2>
-            {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
-            <form onSubmit={handleSubmit}>
-                <input type="text" placeholder="Họ tên" value={name} onChange={(e) => setName(e.target.value)} required />
-                <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                <input type="password" placeholder="Mật khẩu" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                <button type="submit" className="btn-primary" style={{ width: '100%' }}>Đăng Ký</button>
-            </form>
+        <div style={{
+            minHeight: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'radial-gradient(circle at 20% 40%, #500000, #000000 60%)',
+            color: '#fff'
+        }}>
+            <div className="container" style={{ maxWidth: '400px', width: '100%', padding: '40px', backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: '12px', border: '1px solid #333' }}>
+                <h2 style={{ marginBottom: '20px', textAlign: 'center' }}>Đăng Ký Thành Viên</h2>
+                {error && <div style={{ color: 'red', marginBottom: '10px', textAlign: 'center' }}>{error}</div>}
+                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                    <input type="text" placeholder="Họ tên" value={name} onChange={(e) => setName(e.target.value)} required style={{ padding: '12px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#222', color: '#fff' }} />
+                    <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required style={{ padding: '12px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#222', color: '#fff' }} />
+                    <input type="password" placeholder="Mật khẩu" value={password} onChange={(e) => setPassword(e.target.value)} required style={{ padding: '12px', borderRadius: '4px', border: '1px solid #444', backgroundColor: '#222', color: '#fff' }} />
+                    <button type="submit" className="btn-primary" style={{ width: '100%', padding: '12px', fontWeight: 'bold' }}>Đăng Ký</button>
+                </form>
+                <div style={{ marginTop: '20px', textAlign: 'center', fontSize: '0.9rem', color: '#aaa' }}>
+                    Đã có tài khoản? <Link to="/login" style={{ color: 'var(--primary-color)', textDecoration: 'none' }}>Đăng nhập</Link>
+                </div>
+            </div>
         </div>
     );
 };

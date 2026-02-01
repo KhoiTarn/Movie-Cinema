@@ -19,5 +19,6 @@ router.use("/users", userRoutes);
 router.use("/upload", uploadRoutes);
 router.use("/genres", genreRoutes);
 router.use("/stats", require("./stats.routes"));
+router.use("/rooms", require("./room.routes"));
 
 module.exports = router;

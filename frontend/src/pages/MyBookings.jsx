@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 
 const MyBookings = () => {
+    const navigate = useNavigate();
     const [bookings, setBookings] = useState([]);
 
     useEffect(() => {
@@ -12,6 +14,23 @@ const MyBookings = () => {
 
     return (
         <div className="container" style={{ padding: '40px 20px' }}>
+            <button
+                onClick={() => navigate('/profile')}
+                style={{
+                    background: 'none',
+                    border: '1px solid #555',
+                    color: '#ccc',
+                    padding: '8px 15px',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '5px',
+                    marginBottom: '20px'
+                }}
+            >
+                ⬅ Quay lại
+            </button>
             <h2 style={{ marginBottom: '30px' }}>Vé Của Tôi</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 {bookings.length > 0 ? bookings.map(booking => (

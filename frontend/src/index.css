@@ -14,7 +14,10 @@
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: var(--bg-color);
+  background: radial-gradient(circle at 80% 0%, #400000 0%, transparent 50%),
+              radial-gradient(circle at 0% 100%, #400000 0%, transparent 50%),
+              #000000;
+  background-attachment: fixed;
   color: var(--text-color);
   line-height: 1.5;
 }

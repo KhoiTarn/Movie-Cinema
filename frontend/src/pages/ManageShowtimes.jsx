@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 
 const ManageShowtimes = () => {
+    const navigate = useNavigate();
     const [showtimes, setShowtimes] = useState([]);
     const [movies, setMovies] = useState([]);
     const [cinemas, setCinemas] = useState([]); // We need to fetch cinemas to get rooms? Or fetch rooms directly?
@@ -107,7 +109,25 @@ const ManageShowtimes = () => {
 
     return (
         <div className="container" style={{ padding: '20px' }}>
-            <h2>Quản lý Lịch Chiếu</h2>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
+                <button
+                    onClick={() => navigate('/admin')}
+                    style={{
+                        background: 'none',
+                        border: '1px solid #555',
+                        color: '#ccc', // Fixed for dark theme
+                        padding: '5px 10px',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '5px'
+                    }}
+                >
+                    ⬅ Quay lại
+                </button>
+                <h2 style={{ margin: 0 }}>Quản lý Lịch Chiếu</h2>
+            </div>
 
             <div style={{ backgroundColor: '#1a1a1a', padding: '20px', borderRadius: '8px', marginBottom: '30px' }}>
                 <h3>Thêm Lịch Chiếu Mới</h3>

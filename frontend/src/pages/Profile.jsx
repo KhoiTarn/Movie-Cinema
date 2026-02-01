@@ -126,6 +126,23 @@ const Profile = () => {
 
     return (
         <div className="container" style={{ padding: '0px 0 50px', maxWidth: '900px', margin: '0 auto' }}>
+            <button
+                onClick={() => navigate('/')}
+                style={{
+                    background: 'none',
+                    border: '1px solid #555',
+                    color: '#ccc',
+                    padding: '8px 15px',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '5px',
+                    margin: '30px 0 20px'
+                }}
+            >
+                ⬅ Trang chủ
+            </button>
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '30px', padding: '30px', backgroundColor: '#1a1a1a', borderRadius: '12px', position: 'relative' }}>
                 {/* Avatar Display */}
                 <div style={{ width: '80px', height: '80px', borderRadius: '50%', backgroundColor: 'var(--primary-color)', marginRight: '20px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
