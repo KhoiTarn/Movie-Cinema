@@ -18,6 +18,7 @@ router.use("/bookings", bookingRoutes);
 router.use("/users", userRoutes);
 router.use("/upload", uploadRoutes);
 router.use("/genres", genreRoutes);
+router.use("/reviews", require("./review.routes"));
 router.use("/stats", require("./stats.routes"));
 router.use("/rooms", require("./room.routes"));
 

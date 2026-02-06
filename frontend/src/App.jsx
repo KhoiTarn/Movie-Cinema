@@ -11,6 +11,8 @@ import AdminDashboard from './pages/AdminDashboard';
 import ManageMovies from './pages/ManageMovies';
 import ManageShowtimes from './pages/ManageShowtimes';
 import ManageRooms from './pages/ManageRooms';
+import FAQ from './pages/FAQ';
+import Search from './pages/Search';
 import AdminRoute from './components/AdminRoute';
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
         <Route path="/movie/:id" element={<MovieDetail />} />
         <Route path="/booking/:showtimeId" element={<Booking />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/search" element={<Search />} />
 
         {/* Admin Routes */}
         <Route element={<AdminRoute />}>

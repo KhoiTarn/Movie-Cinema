@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import api from '../services/api';
 
 const Home = () => {
@@ -13,7 +13,9 @@ const Home = () => {
 
     return (
         <div className="container" style={{ padding: '40px 20px' }}>
-            <h2 style={{ marginBottom: '30px', borderLeft: '4px solid var(--primary-color)', paddingLeft: '10px' }}>Phim Đang Chiếu</h2>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
+                <h2 style={{ borderLeft: '4px solid var(--primary-color)', paddingLeft: '10px' }}>Phim Đang Chiếu</h2>
+            </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '30px' }}>
                 {movies.map(movie => (
                     <div key={movie.movie_id} className="card">

@@ -7,7 +7,25 @@ class MovieController {
     // GET /api/movies
     static async getAll(req, res) {
         try {
+            const { genre_id, age_rating, search } = req.query;
+            let where = {};
+
+            if (genre_id) {
+                where.genres = { genre_id: parseInt(genre_id) };
+            }
+
+            if (age_rating && age_rating !== 'All') {
+                where.age_rating = age_rating;
+            }
+
+            if (search) {
+                const { ILike } = require("typeorm");
+                where.title = ILike(`%${search}%`);
+            }
+
             const movies = await movieRepository.find({
+                where,
+                relations: ["genres"],
                 order: { created_at: "DESC" }
             });
             res.json(movies);
